@@ -6,7 +6,7 @@ import os
 def write_file(filename, data):
     if os.path.isfile(filename):
         with open(filename, "a") as f:
-            f.write('\n', + data)
+            f.write('\n' + data)
     else:
         with open(filename, "w") as f:
             f.write(data)
@@ -14,7 +14,7 @@ def write_file(filename, data):
 
 def print_time():
     now = datetime.now()
-    data = "Current Time: " + now
+    data = "Current Time: " + now.strftime("%m/%d/%Y %H:%M:%S")
     return data
 
 
