@@ -5,7 +5,7 @@ from datetime import datetime
 import os
 
 CHROME_DRIVER_PATH_LOCAL = "/Users/keeganleary/Development/chromedriver"
-CHROME_DRIVER_PATH_VPS = "/usr/bin/chrome-driver"
+CHROME_DRIVER_PATH_VPS = "/usr/bin/chromedriver"
 NUM_DAILY_ACCOUNTS_TO_FOLLOW = 100
 NUM_DAILY_ACCOUNTS_TO_UNFOLLOW = 15
 STARTING_HOUR = 8
