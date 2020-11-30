@@ -1,2 +1,6 @@
 # Project exclude paths
 /venv/
+config.py
+ghostdriver.log
+logfile
+to_follow.txt
