@@ -32,6 +32,7 @@ def login():
 
     sleep(2)
     try:
+        print("Checking for save info popup")
         not_now_save_button = driver.find_element_by_xpath(
             '//*[@id="react-root"]/section/main/div/div/div/div/button')
         not_now_save_button.click()
@@ -40,6 +41,7 @@ def login():
 
     sleep(2)
     try:
+        print("checking for notifications popup")
         not_now_notify_button = driver.find_element_by_xpath('/html/body/div[4]/div/div/div/div[3]/button[2]')
         not_now_notify_button.click()
     except NoSuchElementException:
@@ -98,6 +100,7 @@ def follow_accounts(num):
         logging.info("accounts_to_follow is empty")
     else:
         for account in accounts_to_follow:
+            print(f"Attempting to follow {account}")
             logging.info(f"Headed to https://www.instagram.com/{account}/")
             driver.get(f"https://www.instagram.com/{account}/")
             sleep(2)
