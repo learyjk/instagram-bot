@@ -139,10 +139,16 @@ logging.basicConfig(
     filename="logfile",
     filemode="a+",
     format="%(asctime)-15s %(levelname)-8s %(message)s")
-options = webdriver.ChromeOptions()
+options = Options()
+options.page_load_strategy = 'eager'
 options.add_argument('--headless')
+options.add_argument('start-maximized')
+options.add_argument('enable-automation')
+options.add_argument('--disable-extensions')
+options.add_argument('--dns-prefetch-disable')
+options.add_argument('--disable-gpu')
 options.add_argument('--no-sandbox')
-options.add_argument('--window-size=800,600')
+options.add_argument('--disable-browser-side-navigation')
 options.add_argument('--disable-dev-shm-usage')
 options.add_argument('--user-agent=""Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.157 Safari/537.36""')
 driver = webdriver.Chrome(CHROME_DRIVER_PATH_VPS, options=options)
