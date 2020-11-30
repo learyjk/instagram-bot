@@ -99,14 +99,21 @@ def follow_accounts(num):
             driver.get(f"https://www.instagram.com/{account}/")
             sleep(2)
             try:
-                follow_button = driver.find_element_by_xpath('//*[@id="react-root"]/section/main/div/header/section/div[1]/div[1]/div/div/div/span/span[1]/button')
+                follow_button = driver.find_element_by_xpath(
+                    '//*[@id="react-root"]/section/main/div/header/section/div[1]/div[1]/div/div/button')
                 sleep(1)
                 follow_button.click()
-            except ElementClickInterceptedException:
-                logging.info(f"Already following {account}!")
-                cancel_button = driver.find_element_by_xpath('/html/body/div[5]/div/div/div/div[3]/button[2]')
-                sleep(1)
-                cancel_button.click()
+                logging.info(f"Successfully followed/requested {account}")
+            except (ElementClickInterceptedException, NoSuchElementException):
+                try:
+                    follow_button = driver.find_element_by_xpath(
+                        '//*[@id="react-root"]/section/main/div/header/section/div[1]/div[1]/div/div/div/span/span[1]/button')
+                    sleep(1)
+                    follow_button.click()
+                    logging.info(f"Successfully followed/requested {account}")
+                except NoSuchElementException:
+                    logging.info("Bad Xpath for the follow button.")
+                    pass
 
 
 def write_log(filename, data):
