@@ -13,7 +13,6 @@ CHROME_DRIVER_PATH_VPS = "/usr/bin/chromedriver"
 NUM_DAILY_ACCOUNTS_TO_FOLLOW = 100
 NUM_DAILY_ACCOUNTS_TO_UNFOLLOW = 15
 NUM_TO_FOLLOW_EACH_RUN = 7
-STARTING_HOUR = 9
 
 
 def login():
@@ -50,29 +49,37 @@ def login():
 
 
 def build_to_follow_file():
-    logging.info(f"Headed to https://www.instagram.com/{TARGET_ACCOUNT}/")
-    driver.get(f"https://www.instagram.com/{TARGET_ACCOUNT}/")
-    sleep(2)
-    followers_button = driver.find_element_by_xpath(
-        '//*[@id="react-root"]/section/main/div/header/section/ul/li[2]/a')
-    followers_button.click()
-    sleep(2)
-    modal = driver.find_element_by_xpath('/html/body/div[5]/div/div/div[2]')
-    for _ in range(5):
-        # scroll modal
-        logging.info("scrolling the modal a bit...")
-        driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", modal)
+    data = []
+    if os.path.isfile("to_follow.txt"):
+        # reads the whole file
+        with open('to_follow.txt', 'r') as fin:
+            data = fin.read().splitlines(True)
+
+    # if to_follow.txt is empty, build it again
+    if not data:
+        logging.info(f"Headed to https://www.instagram.com/{TARGET_ACCOUNT}/")
+        driver.get(f"https://www.instagram.com/{TARGET_ACCOUNT}/")
+        sleep(2)
+        followers_button = driver.find_element_by_xpath(
+            '//*[@id="react-root"]/section/main/div/header/section/ul/li[2]/a')
+        followers_button.click()
+        sleep(2)
+        modal = driver.find_element_by_xpath('/html/body/div[5]/div/div/div[2]')
+        for _ in range(5):
+            # scroll modal
+            logging.info("scrolling the modal a bit...")
+            driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", modal)
+            sleep(1)
+
+        all_account_names = driver.find_elements_by_css_selector("li a")[2:]
         sleep(1)
 
-    all_account_names = driver.find_elements_by_css_selector("li a")[2:]
-    sleep(1)
-
-    with open("to_follow.txt", "w") as f:
-        for account in all_account_names:
-            account_name = account.text
-            if account_name != '':
-                logging.info(f"{account_name} added to to_follow.txt")
-                f.write(account_name + '\n')
+        with open("to_follow.txt", "w") as f:
+            for account in all_account_names:
+                account_name = account.text
+                if account_name != '':
+                    logging.info(f"{account_name} added to to_follow.txt")
+                    f.write(account_name + '\n')
 
 
 def follow_accounts(num):
@@ -145,7 +152,6 @@ logging.basicConfig(
 options = Options()
 options.page_load_strategy = 'normal' #'eager' 'none?'
 options.add_argument('--headless')
-options.add_argument('--disable-gpu')
 options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
 options.add_argument('--user-agent=""Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.157 Safari/537.36""')
@@ -153,12 +159,9 @@ driver = webdriver.Chrome(CHROME_DRIVER_PATH_VPS, options=options)
 now = datetime.now()
 login()
 
-# build a list of ~72 accounts to follow for the day
-if now.hour == STARTING_HOUR:
-    build_to_follow_file()
 
+build_to_follow_file()
 follow_accounts(NUM_TO_FOLLOW_EACH_RUN)
-
 driver.quit()
 
 write_log('run_history.txt', print_time())
