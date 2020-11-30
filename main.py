@@ -139,13 +139,14 @@ logging.basicConfig(
     filename="logfile",
     filemode="a+",
     format="%(asctime)-15s %(levelname)-8s %(message)s")
-options = Options()
-options.headless = True
+options = webdriver.ChromeOptions()
+options.add_argument('--headless')
 options.add_argument('--no-sandbox')
+options.add_argument('--window-size=800,600')
 options.add_argument('--disable-dev-shm-usage')
+options.add_argument('--user-agent=""Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.157 Safari/537.36""')
 driver = webdriver.Chrome(CHROME_DRIVER_PATH_VPS, options=options)
 now = datetime.now()
-
 login()
 
 # build a list of ~72 accounts to follow for the day
