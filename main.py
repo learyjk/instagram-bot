@@ -142,6 +142,7 @@ logging.basicConfig(
 options = Options()
 options.headless = True
 options.add_argument('--no-sandbox')
+options.add_argument('--disable-dev-shm-usage')
 driver = webdriver.Chrome(CHROME_DRIVER_PATH_VPS, options=options)
 now = datetime.now()
 
