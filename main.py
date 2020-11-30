@@ -94,15 +94,13 @@ def follow_accounts(num):
         for account in accounts_to_follow:
             logging.info(f"Headed to https://www.instagram.com/{account}/")
             driver.get(f"https://www.instagram.com/{account}/")
-            sleep(1)
-            follow_button = driver.find_element_by_xpath(
-                '//*[@id="react-root"]/section/main/div/header/section/div[1]/div[1]/div/div/button')
             sleep(2)
             try:
+                follow_button = driver.find_element_by_xpath('//*[@id="react-root"]/section/main/div/header/section/div[1]/div[1]/div/div/div/span/span[1]/button')
+                sleep(1)
                 follow_button.click()
             except ElementClickInterceptedException:
                 logging.info(f"Already following {account}!")
-                sleep(1)
                 cancel_button = driver.find_element_by_xpath('/html/body/div[5]/div/div/div/div[3]/button[2]')
                 sleep(1)
                 cancel_button.click()
