@@ -141,6 +141,7 @@ logging.basicConfig(
     format="%(asctime)-15s %(levelname)-8s %(message)s")
 options = Options()
 options.headless = True
+options.add_argument('--no-sandbox')
 driver = webdriver.Chrome(CHROME_DRIVER_PATH_VPS, options=options)
 now = datetime.now()
 
