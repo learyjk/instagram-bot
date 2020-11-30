@@ -4,3 +4,4 @@ config.py
 ghostdriver.log
 logfile
 to_follow.txt
+run_history.txt

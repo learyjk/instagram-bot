@@ -21,11 +21,14 @@ def login():
     driver.get("https://www.instagram.com/accounts/login/")
     sleep(2)
     logging.info("Logging in...")
+    print("Logging in...")
     username_field = driver.find_element_by_xpath('//*[@id="loginForm"]/div/div[1]/div/label/input')
     username_field.send_keys(IG_USER)
     password_field = driver.find_element_by_xpath('//*[@id="loginForm"]/div/div[2]/div/label/input')
     password_field.send_keys(IG_PASS)
+    print("Pressing ENTER...")
     password_field.send_keys(Keys.ENTER)
+    print("ENTER Sent!")
 
     sleep(2)
     try:
