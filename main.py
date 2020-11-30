@@ -13,7 +13,7 @@ CHROME_DRIVER_PATH_VPS = "/usr/bin/chromedriver"
 NUM_DAILY_ACCOUNTS_TO_FOLLOW = 100
 NUM_DAILY_ACCOUNTS_TO_UNFOLLOW = 15
 NUM_TO_FOLLOW_EACH_RUN = 7
-STARTING_HOUR = datetime.now().hour
+STARTING_HOUR = 9
 
 
 def login():
@@ -28,9 +28,12 @@ def login():
     password_field.send_keys(Keys.ENTER)
 
     sleep(2)
-    not_now_save_button = driver.find_element_by_xpath(
-        '//*[@id="react-root"]/section/main/div/div/div/div/button')
-    not_now_save_button.click()
+    try:
+        not_now_save_button = driver.find_element_by_xpath(
+            '//*[@id="react-root"]/section/main/div/div/div/div/button')
+        not_now_save_button.click()
+    except NoSuchElementException:
+        pass
 
     sleep(2)
     try:
