@@ -110,7 +110,7 @@ def follow_accounts(num):
             print(f"Attempting to follow {account}")
             logging.info(f"Headed to https://www.instagram.com/{account}/")
             driver.get(f"https://www.instagram.com/{account}/")
-            sleep(2)
+            sleep(1)
             try:
                 follow_button = driver.find_element_by_xpath(
                     '//*[@id="react-root"]/section/main/div/header/section/div[1]/div[1]/div/div/button')
@@ -150,7 +150,7 @@ logging.basicConfig(
     filemode="a+",
     format="%(asctime)-15s %(levelname)-8s %(message)s")
 options = Options()
-options.page_load_strategy = 'normal' #'eager' 'none?'
+options.page_load_strategy = 'eager' #'eager' 'none?' 'normal
 options.add_argument('--headless')
 options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
