@@ -12,7 +12,7 @@ CHROME_DRIVER_PATH_LOCAL = "/Users/keeganleary/Development/chromedriver"
 CHROME_DRIVER_PATH_VPS = "/usr/bin/chromedriver"
 NUM_DAILY_ACCOUNTS_TO_FOLLOW = 100
 NUM_DAILY_ACCOUNTS_TO_UNFOLLOW = 15
-NUM_TO_FOLLOW_EACH_RUN = 7
+NUM_TO_FOLLOW_EACH_RUN = 8
 
 
 def login():
@@ -157,9 +157,9 @@ options.add_argument('--disable-dev-shm-usage')
 options.add_argument('--user-agent=""Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.157 Safari/537.36""')
 driver = webdriver.Chrome(CHROME_DRIVER_PATH_VPS, options=options)
 now = datetime.now()
+
+
 login()
-
-
 build_to_follow_file()
 follow_accounts(NUM_TO_FOLLOW_EACH_RUN)
 driver.quit()
